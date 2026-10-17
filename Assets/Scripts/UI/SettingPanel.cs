@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -56,6 +56,9 @@ public class SettingPanel : GUIBase<SettingPanel>
 
     private void OnGUI()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        PortfolioBrowserFont.Apply(quitButtonStyle);
+#endif
         GUI.DrawTexture(backTextureRect, backTexture);
         GUI.Label(new Rect(backTextureRect.x+screenWidth/6, backTextureRect.y + 20, backTextureRect.width/2, 30), "设置");
 

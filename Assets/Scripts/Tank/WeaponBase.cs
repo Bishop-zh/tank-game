@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -69,9 +69,12 @@ public class WeaponBase : MonoBehaviour
 
     //显示当前武器的冷却状态
     void OnGUI()
-    {        
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        PortfolioBrowserFont.Apply();
+#endif        
         //只有玩家武器才会显示冷却状态，这里应该放入玩家坦克内部进行渲染
-        if(owner.gameObject.GetComponent<PlayerTank>() == null)
+        if(owner == null || owner.GetComponent<PlayerTank>() == null)
         {
             return;
         }

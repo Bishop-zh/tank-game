@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,14 +31,14 @@ public class EnemyTank : TankBase
         MoveToTarget(targetTransforms);
         //根据地方坦克坐标计算血条在屏幕中显示坐标，（目前暂未判断不显示反向坦克血条，使用只在受击后显示代替）
         enemyTankHpPos = Camera.main.WorldToScreenPoint(transform.position);
-        Debug.Log(enemyTankHpPos+"1");
+
         enemyTankHpPos -= new Vector3(Screen.width/40,(-1)*Screen.height/10);     
-        Debug.Log(enemyTankHpPos+"2");
+
         //屏幕坐标系和unity相机的坐标系不同，一个原点在左上角，一个在左下角   
         enemyTankHpRect = new Rect(enemyTankHpPos.x,Screen.height-enemyTankHpPos.y,Screen.width/20,Screen.height/70);
-        Debug.Log(enemyTankHpPos+"3");
+
         //检验武器是否冷却完毕
-        if(weapons[0].currentCoolDownTime <= 0)
+        if(weapons != null && weapons.Length > 0 && weapons[0] != null && weapons[0].currentCoolDownTime <= 0)
         {
             AtackPlayer();
         }        
@@ -50,6 +50,9 @@ public class EnemyTank : TankBase
     //绘制敌方坦克血条
     private void OnGUI()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        PortfolioBrowserFont.Apply();
+#endif
         if(Camera.current != Camera.main)
         {
             return;
@@ -60,7 +63,7 @@ public class EnemyTank : TankBase
             showHpTime -= Time.deltaTime;
             GUI.DrawTexture(enemyTankHpRect, enemyTankHpTexture);
             GUI.color = Color.red;
-            GUI.Label(new Rect(100,100,200,60), hp.ToString("F2") + "/" + maxHp.ToString("F2")+enemyTankHpRect);
+
             //根据当前血量动态改变当前红色血条长度
             GUI.DrawTexture(new Rect(enemyTankHpRect.x,enemyTankHpRect.y,enemyTankHpRect.width*hp/maxHp,enemyTankHpRect.height), enemyTankHpTexture);
             GUI.color = Color.white;
@@ -93,7 +96,8 @@ public class EnemyTank : TankBase
 
     //设置目标点，随机在目标点之间移动
     public void MoveToTarget(Transform[] targets)
-    {             
+    {
+        if (targets == null || targets.Length == 0 || targets[index] == null) return;
         //保持自身的z轴坐标向目标点位移
         transform.LookAt(new Vector3(targets[index].position.x, transform.position.y, targets[index].position.z));
         transform.Translate(Vector3.forward*runSpeed*Time.deltaTime);
@@ -107,7 +111,7 @@ public class EnemyTank : TankBase
     //待优化方案：减少每帧对距离的计算，对角色位置进行预判性开火，而不是直接设计角色位置
     public void AtackPlayer()
     {
-        if (Vector3.Distance(transform.position, playerTank.position) < 6)
+        if (playerTank != null && Vector3.Distance(transform.position, playerTank.position) < 6)
         {
             tankHead.transform.LookAt(playerTank);
             Fire();

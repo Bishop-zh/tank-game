@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,12 +21,23 @@ public class TankBase : MonoBehaviour
         public float headRotateSpeed = 20;      // 炮台转向速度
 
       
+    protected virtual void Awake()
+    {
+        if (weapons == null || weapons.Length == 0) weapons = GetComponentsInChildren<WeaponBase>();
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            if (weapons[i] == null) continue;
+            weapons[i].FindOwner(gameObject);
+            weapons[i].SetWeaponIndex(i + 1);
+        }
+    }
+
     //发射子弹方法,获取武器信息发射对应子弹，根据角色攻击力计算子弹最终伤害
     public void Fire()
     {        
         for(int i = 0; i<weapons.Length; i++)
         {
-            weapons[i].Fire(damageMultiplier,fireIntervalScale);
+            if (weapons[i] != null) weapons[i].Fire(damageMultiplier,fireIntervalScale);
         }
     }
 

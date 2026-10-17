@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
+
 using UnityEngine;
 
 public class GameSceneUI : GUIBase<GameSceneUI>
@@ -31,6 +31,9 @@ public class GameSceneUI : GUIBase<GameSceneUI>
 
     private void OnGUI()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        PortfolioBrowserFont.Apply(hpStyle,scoreTipStyle,scoreStyle);
+#endif
         // //放到角色类中渲染，便于读取角色血量
         // //绘制血量以及血量底图（血量显示尝试进一步优化为可按血量分格显示）
         // GUI.DrawTexture(new Rect(50, screenHight - 100, 300, 50), hpBackGroundTexture);
@@ -91,3 +94,4 @@ public class GameSceneUI : GUIBase<GameSceneUI>
 
 
 }
+

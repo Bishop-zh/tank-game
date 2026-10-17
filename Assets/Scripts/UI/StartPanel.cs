@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,6 +28,9 @@ public class StartPanel : GUIBase<StartPanel>
     //开始界面ui以及交互逻辑
     private void OnGUI()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        PortfolioBrowserFont.Apply(startGameButtonStyle,settingButtonStyle,quitButtonStyle);
+#endif
         if (GUI.Button(new Rect(screenWidth / 2 - 80, screenHight / 2 - 50, 150, 50), "开始游戏", startGameButtonStyle))
         {
             SceneManager.LoadScene("GameScene");

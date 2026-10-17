@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //SceneManager使用的命名空间
@@ -22,6 +22,9 @@ public class EndGamePanel : GUIBase<EndGamePanel>
 
     private void OnGUI()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        PortfolioBrowserFont.Apply();
+#endif
         if(!ifActive)
         {
             return;

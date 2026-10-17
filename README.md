@@ -1,4 +1,7 @@
-# TankGame - Unity 坦克大战练习项目
+﻿# TankGame - Unity 坦克大战练习项目
+
+[在线试玩](https://bishop-zh.github.io/tank-game/) · [WebGL 构建与发布](WEBGL.md)
+
 
 > 本项目是跟随 **唐老狮 Unity 基础教程** 学习制作的练手小游戏，仅供学习交流使用。
 

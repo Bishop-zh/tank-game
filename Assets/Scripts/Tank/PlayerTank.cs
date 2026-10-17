@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,6 +49,9 @@ public class PlayerTank : TankBase
     //根据当前血量来动态的修改ui界面血条长度，实时显示血量    
     void OnGUI()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        PortfolioBrowserFont.Apply(hpStyle);
+#endif
         //绘制血量以及血量底图（血量显示尝试进一步优化为可按血量分格显示）
         GUI.DrawTexture(new Rect(50, screenHight - 100, 300, 50), hpBackGroundTexture);
         //设置血条颜色
