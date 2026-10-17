@@ -1,0 +1,12 @@
+{
+  "title": "TankGame",
+  "subtitle": "Unity 坦克练习",
+  "anchor": "notes",
+  "controls": "W / S 前后移动 · A / D 转向 · 鼠标移动转动炮塔 · 鼠标左键开火 · Esc 暂停",
+  "mode": "单机教程学习项目",
+  "slug": "tank-game",
+  "loader": "Build/tank-game.loader.js",
+  "dataUrl": "Build/tank-game.data.unityweb",
+  "frameworkUrl": "Build/tank-game.framework.js.unityweb",
+  "codeUrl": "Build/tank-game.wasm.unityweb"
+}
